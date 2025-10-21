@@ -30,11 +30,13 @@ const PORT = process.env.PORT || 3000;
             id SERIAL PRIMARY KEY,
             item_id INTEGER NOT NULL REFERENCES items(id),
             buyer_id INTEGER NOT NULL REFERENCES buyers(id),
+            balance_amount DECIMAL(10, 2),
             date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             status VARCHAR(255) DEFAULT 'unpaid'
         );
         CREATE TABLE IF NOT EXISTS payments(
             id SERIAL PRIMARY KEY,
+            amount_paid DECIMAL(10, 2),
             order_id INTEGER NOT NULL REFERENCES orders(id),
             date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
