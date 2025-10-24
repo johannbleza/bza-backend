@@ -1,9 +1,12 @@
 const express = require("express");
 const pool = require("./db");
+const cors = require("cors");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Create tables on startup
 (async () => {
   try {
     await pool.query(`
@@ -45,5 +48,12 @@ const PORT = process.env.PORT || 3000;
     console.log(error);
   }
 })();
+
+//  Middlewares
+app.use(express.json());
+app.use(cors());
+
+// Routes
+app.use("/auth", authRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
