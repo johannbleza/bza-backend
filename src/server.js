@@ -8,35 +8,35 @@ const PORT = process.env.PORT || 3000;
   try {
     await pool.query(`
         CREATE TABLE IF NOT EXISTS users(
-            id SERIAL PRIMARY KEY,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             username VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL 
         );
         CREATE TABLE IF NOT EXISTS buyers(
-            id SERIAL PRIMARY KEY,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             address VARCHAR(255),
             contact_no VARCHAR(255) 
         );
+        CREATE TABLE IF NOT EXISTS orders(
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            buyer_id INTEGER NOT NULL REFERENCES buyers(id),
+            status VARCHAR(255),
+            date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
         CREATE TABLE IF NOT EXISTS items(
-            id SERIAL PRIMARY KEY,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             source VARCHAR(255),
             original_price DECIMAL(10, 2),
             selling_price DECIMAL(10, 2),
-            status VARCHAR(255) DEFAULT 'not yet arrived'
-        );
-        CREATE TABLE IF NOT EXISTS orders(
-            id SERIAL PRIMARY KEY,
-            item_id INTEGER NOT NULL REFERENCES items(id),
-            buyer_id INTEGER NOT NULL REFERENCES buyers(id),
-            balance_amount DECIMAL(10, 2),
-            date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            status VARCHAR(255) DEFAULT 'unpaid'
+            status VARCHAR(255),
+            order_id INTEGER REFERENCES orders(id)
         );
         CREATE TABLE IF NOT EXISTS payments(
-            id SERIAL PRIMARY KEY,
-            amount_paid DECIMAL(10, 2),
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            amount_paid DECIMAL(10, 2) NOT NULL,
+            method VARCHAR(255),
             order_id INTEGER NOT NULL REFERENCES orders(id),
             date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
