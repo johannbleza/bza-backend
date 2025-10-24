@@ -1,0 +1,53 @@
+@port = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxMzAyMDc2LCJleHAiOjE3OTI4MzgwNzZ9.qq7q-fr1QpYxOlCqyemXPZaViXqPFEUV5dBlOZBsYCY
+### Login user
+POST {{port}}/auth/login/
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "password"
+}
+
+### Add new item
+POST http://localhost:3000/items/
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "name": "Adidas Adizero",
+    "source": "Shopee",
+    "original_price": 10000,
+    "selling_price": 8000,
+    "status": "On hand",
+    "order_id": null
+}
+
+### Get all items
+GET {{port}}/items/
+Content-Type: application/json
+Authorization: {{token}}
+
+### Get single item
+GET {{port}}/items/1
+Content-Type: application/json
+Authorization: {{token}}
+
+### Update item
+PUT http://localhost:3000/items/2
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "name": "Nike",
+    "source": "Shopee",
+    "original_price": 10000,
+    "selling_price": 8000,
+    "status": "On hand",
+    "order_id": null
+}
+
+### Delete item
+DELETE {{port}}/items/2
+Content-Type: application/json
+Authorization: {{token}}

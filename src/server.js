@@ -2,6 +2,8 @@ const express = require("express");
 const pool = require("./db");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
+const itemsRoutes = require("./routes/itemsRoutes");
+const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -55,5 +57,6 @@ app.use(cors());
 
 // Routes
 app.use("/auth", authRoutes);
+app.use("/items", authMiddleware, itemsRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
