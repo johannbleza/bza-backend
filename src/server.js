@@ -32,6 +32,7 @@ const PORT = process.env.PORT || 3000;
         CREATE TABLE IF NOT EXISTS items(
             id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
+            quantity INTEGER DEFAULT 1,
             source VARCHAR(255),
             original_price DECIMAL(10, 2),
             selling_price DECIMAL(10, 2),

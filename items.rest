@@ -16,6 +16,7 @@ Authorization: {{token}}
 
 {
     "name": "Adidas Adizero",
+    "quantity": 2,
     "source": "Shopee",
     "original_price": 10000,
     "selling_price": 8000,

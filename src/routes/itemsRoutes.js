@@ -6,12 +6,19 @@ const router = express.Router();
 // Creat new item
 router.post("/", async (req, res) => {
   try {
-    const { name, source, original_price, selling_price, status, order_id } =
-      req.body;
+    const {
+      name,
+      quantity,
+      source,
+      original_price,
+      selling_price,
+      status,
+      order_id,
+    } = req.body;
 
     const item = await pool.query(
-      `INSERT INTO items(name, source, original_price, selling_price, status, order_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [name, source, original_price, selling_price, status, order_id]
+      `INSERT INTO items(name, quantity, source, original_price, selling_price, status, order_id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [name, quantity, source, original_price, selling_price, status, order_id]
     );
 
     res.json(item.rows[0]);
@@ -48,13 +55,21 @@ router.get("/:id", async (req, res) => {
 // Update item
 router.put("/:id", async (req, res) => {
   try {
-    const { name, source, original_price, selling_price, status, order_id } =
-      req.body;
+    const {
+      name,
+      quantity,
+      source,
+      original_price,
+      selling_price,
+      status,
+      order_id,
+    } = req.body;
 
     const item = await pool.query(
-      `UPDATE items SET name=$1, source=$2, original_price=$3, selling_price=$4, status=$5, order_id=$6 WHERE id=$7 RETURNING *`,
+      `UPDATE items SET name=$1, quantity=$2, source=$3, original_price=$4, selling_price=$5, status=$6, order_id=$7 WHERE id=$8 RETURNING *`,
       [
         name,
+        quantity,
         source,
         original_price,
         selling_price,
@@ -83,4 +98,5 @@ router.delete("/:id", async (req, res) => {
     res.send(500).json({ message: "Failed to delete item." });
   }
 });
+
 module.exports = router;
