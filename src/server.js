@@ -3,6 +3,7 @@ const pool = require("./db");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const itemsRoutes = require("./routes/itemsRoutes");
+const buyersRoutes = require("./routes/buyersRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
@@ -59,5 +60,6 @@ app.use(cors());
 // Routes
 app.use("/auth", authRoutes);
 app.use("/items", authMiddleware, itemsRoutes);
+app.use("/buyers", authMiddleware, buyersRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
