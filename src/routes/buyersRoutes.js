@@ -77,4 +77,19 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// Get buyer's orders
+router.get("/:id/orders", async (req, res) => {
+  try {
+    const orders = await pool.query(
+      `SELECT * FROM orders WHERE buyer_id = $1`,
+      [req.params.id]
+    );
+
+    res.json(orders.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "Failed to get buyer's orders." });
+  }
+});
+
 module.exports = router;

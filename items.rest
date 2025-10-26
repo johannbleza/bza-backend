@@ -15,13 +15,13 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-    "name": "Adidas Adizero",
+    "name": "Nike Airforce 1",
     "quantity": 2,
     "source": "Shopee",
     "original_price": 10000,
     "selling_price": 8000,
     "status": "On hand",
-    "order_id": null
+    "order_id": 1
 }
 
 ### Get all items

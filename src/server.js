@@ -4,6 +4,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const itemsRoutes = require("./routes/itemsRoutes");
 const buyersRoutes = require("./routes/buyersRoutes");
+const ordersRoutes = require("./routes/ordersRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
@@ -38,7 +39,7 @@ const PORT = process.env.PORT || 3000;
             original_price DECIMAL(10, 2),
             selling_price DECIMAL(10, 2),
             status VARCHAR(255),
-            order_id INTEGER REFERENCES orders(id)
+            order_id INTEGER NOT NULL REFERENCES orders(id)
         );
         CREATE TABLE IF NOT EXISTS payments(
             id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -61,5 +62,6 @@ app.use(cors());
 app.use("/auth", authRoutes);
 app.use("/items", authMiddleware, itemsRoutes);
 app.use("/buyers", authMiddleware, buyersRoutes);
+app.use("/orders", authMiddleware, ordersRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
